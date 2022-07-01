@@ -1,6 +1,6 @@
 <template>
   <section class="relative w-full h-full">
-    <form-modal :formData="newUser" buttonLabel="Sign-up" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <form-modal :formData="newUser" buttonLabel="Sign-up" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" @showErrors="setErrors">
       <div class="form__wrapper">
         <input-text 
           v-for="(input, index) in inputs" 
@@ -9,6 +9,7 @@
           :field="input.field" 
           :label="input.label" 
           @getValue="setValue"
+          :showError="input.show_error"
         />
       </div>
     </form-modal>
@@ -19,7 +20,7 @@
 import FormModal from '@/components/commons/form-modal.vue'
 import InputText from '@/components/commons/input-text.vue'
 import type { User } from '@/types/user'
-import type { Input } from '@/types/form'
+import type { Input, Error } from '@/types/form'
 
 definePageMeta({
   layout: 'auth'
@@ -33,22 +34,26 @@ const inputs = ref<Input[]>([
   {
     type: 'text',
     field: 'username',
-    label: 'Username'
+    label: 'Username',
+    show_error: false
   },
   {
     type: 'email',
     field: 'email',
-    label: 'Email'
+    label: 'Email',
+    show_error: false
   },
   {
     type: 'password',
     field: 'password',
-    label: 'Password'
+    label: 'Password',
+    show_error: false
   },
   {
     type: 'password',
     field: 'confirm_password',
-    label: 'Confirm Password'
+    label: 'Confirm Password',
+    show_error: false
   },
 ])
 
@@ -61,6 +66,18 @@ const newUser = ref<User>({
 
 function setValue(event: Event, field: keyof User) {
   const value = (event.target as HTMLInputElement).value
+
+  const index_input = inputs.value.findIndex(input => input.field === field)
+  inputs.value[index_input].show_error = false
+  
   newUser.value[field] = value
+}
+
+function setErrors(errors: Error[]) {
+  console.log('setErrors', errors)
+  errors.forEach(error => {
+    const index_input = inputs.value.findIndex(input => input.field === error.param)
+    inputs.value[index_input].show_error = error
+  })
 }
 </script>

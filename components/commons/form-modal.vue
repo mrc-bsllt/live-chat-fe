@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { API_HOST } from '@/utils/config'
 import type { User } from '@/types/user'
+import type { Error } from '@/types/form'
 
 const props = defineProps({
   formData: { type: Object as () => User, required: true },
@@ -25,13 +26,17 @@ function submitForm() {
     login()
   }
 }
+const emit = defineEmits(['showErrors'])
 
 async function signup() {
   await $fetch(`${API_HOST}/api/auth/signup`, {
     method: 'POST',
     body: props.formData,
     async onResponse({ response }) {
-      console.log(response._data)
+      const errors: Error[] = response._data.errors
+      if(response._data.errors) {
+        emit('showErrors', errors)
+      }
     }
   })
 }
