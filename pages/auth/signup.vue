@@ -69,12 +69,11 @@ function setValue(event: Event, field: keyof User) {
 
   const index_input = inputs.value.findIndex(input => input.field === field)
   inputs.value[index_input].show_error = false
-  
+
   newUser.value[field] = value
 }
 
 function setErrors(errors: Error[]) {
-  console.log('setErrors', errors)
   errors.forEach(error => {
     const index_input = inputs.value.findIndex(input => input.field === error.param)
     inputs.value[index_input].show_error = error
