@@ -1,3 +1,3 @@
 <template>
-  <h1>Home page (default layout)</h1>
+  <h1 class="text-green text-46">Home page (default layout)</h1>
 </template>
