@@ -4,3 +4,14 @@
   box-sizing: border-box;
   @apply text-black;
 }
+
+.btn {
+  @apply text-white uppercase text-22 py-3 px-6 rounded-[5px] shadow-xl hover:bg-opacity-70 transition-all;
+
+  &-success {
+    @apply bg-blue;
+  }
+  &-error {
+    @apply bg-error;
+  }
+}

@@ -93,6 +93,7 @@ module.exports = {
       gold: '#bca71d',
       green: '#207330',
       light_green: '#ADF6B1',
+      blue: '#274C77',
       error: '#aa1717'
     }
   },
