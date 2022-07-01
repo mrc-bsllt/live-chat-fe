@@ -36,6 +36,8 @@ async function signup() {
       const errors: Error[] = response._data.errors
       if(response._data.errors) {
         emit('showErrors', errors)
+      } else {
+        navigateTo('/auth/login')
       }
     }
   })
