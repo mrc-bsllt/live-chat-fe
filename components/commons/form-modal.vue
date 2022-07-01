@@ -10,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import { API_HOST } from '@/utils/config'
 import type { User } from '@/types/user'
 
 const props = defineProps({
@@ -18,6 +19,23 @@ const props = defineProps({
 })
 
 function submitForm() {
-  console.log('Fired!', props.formData)
+  if('password' in props.formData && 'confirm_password' in props.formData) {
+    signup()
+  } else {
+    login()
+  }
+}
+
+async function signup() {
+  await $fetch(`${API_HOST}/api/auth/signup`, {
+    method: 'POST',
+    body: props.formData,
+    async onResponse({ response }) {
+      console.log(response._data)
+    }
+  })
+}
+function login() {
+  console.log('fired login')
 }
 </script>
