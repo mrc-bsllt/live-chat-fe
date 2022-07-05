@@ -51,8 +51,10 @@ async function login() {
       if(response._data.errors) {
         emit('showErrors', errors)
       } else {
-        // navigateTo('/auth/login')
-        console.log('OK')
+        const { token, user_id } = response._data
+        useCookie('token', { maxAge: 60 * 60 * 8 }).value = token
+        useCookie('user_id', { maxAge: 60 * 60 * 8 }).value = user_id
+        navigateTo('/')
       }
     }
   })
