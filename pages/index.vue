@@ -12,8 +12,9 @@ import type { User } from '@/types/user'
 
 const { data: user } = await useAsyncData<User | never>('user', () => {
   const token = useCookie('token').value
+  const user_id = useCookie('user_id').value
 
-  return $fetch(API_HOST + '/api/user', {
+  return $fetch(API_HOST + '/api/user/' + user_id, {
     headers: {
       Authorization: 'Bearer ' + token
     }
