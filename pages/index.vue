@@ -20,7 +20,5 @@ const { data: user } = await useAsyncData<User | never>('user', () => {
     }
   })
 })
-
 if(!user.value) logout()
-
 </script>
