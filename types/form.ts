@@ -1,6 +1,6 @@
 import type { User } from '@/types/user'
 
-type InputTypes = 'text' | 'password' | 'email' | 'tel'
+type InputTypes = 'text' | 'password' | 'email' | 'jwt'
 
 export interface Input {
   type: InputTypes
