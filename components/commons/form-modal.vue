@@ -26,8 +26,8 @@ function submitForm() {
     login()
   }
 }
-const emit = defineEmits(['showErrors'])
 
+const emit = defineEmits(['showErrors'])
 async function signup() {
   await $fetch(`${API_HOST}/api/auth/signup`, {
     method: 'POST',
@@ -42,7 +42,19 @@ async function signup() {
     }
   })
 }
-function login() {
-  console.log('fired login')
+async function login() {
+  await $fetch(`${API_HOST}/api/auth/login`, {
+    method: 'POST',
+    body: props.formData,
+    async onResponse({ response }) {
+      const errors: Error[] = response._data.errors
+      if(response._data.errors) {
+        emit('showErrors', errors)
+      } else {
+        // navigateTo('/auth/login')
+        console.log('OK')
+      }
+    }
+  })
 }
 </script>
