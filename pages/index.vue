@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="text-green text-46">Home page (default layout)</h1>
     <p>{{ user?.username }}</p>
   </div>
 </template>
