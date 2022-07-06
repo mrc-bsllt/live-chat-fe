@@ -1,9 +1,6 @@
 <template>
   <div>
     <p>{{ user?.username }}</p>
-    <i class="i-fa-regular-heart" />
-    <div class="i-fa-brands-github" />
-    <div class="i-ph-lightning-duotone" />
   </div>
 </template>
 
