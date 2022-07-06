@@ -1,8 +1,10 @@
 <template>
   <div class="w-full h-screen overflow-hidden bg-light_green">
     <the-header ref="header" />
-    <the-aside ref="aside" />
-    <slot />
+    <the-aside ref="aside" :style="{ top, height }" />
+    <main ref="main" :style="{ marginLeft }" class="p-5">
+      <slot />
+    </main>
   </div>
 </template>
 
@@ -14,4 +16,31 @@ defineNuxtComponent({
   TheHeader,
   TheAside
 })
+
+// set Aside top/height value AND main margin-left
+const header = ref<typeof TheHeader | null>(null)
+const aside = ref<typeof TheAside | null>(null)
+const top = ref<string>('0px')
+const height = ref<string>('0px')
+const marginLeft = ref<string>('0px')
+
+function setCSSProperties(header: typeof TheHeader | null, aside: typeof TheHeader | null) {
+  const headerHeight = header?.$el.getBoundingClientRect().height
+  const asideWidth = aside?.$el.getBoundingClientRect().width
+  top.value = headerHeight + 'px'
+  height.value = `calc(100vh - ${headerHeight}px)`
+  marginLeft.value = asideWidth + 'px'
+}
+onMounted(() => {
+  setCSSProperties(header.value, aside.value)
+  window.addEventListener('resize', () => {
+    setCSSProperties(header.value, aside.value)
+  })
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', () => {
+    setCSSProperties(header.value, aside.value)
+  })
+})
+// -------------------------------------------------------------------------
 </script>
