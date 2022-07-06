@@ -13,3 +13,5 @@ export interface Error {
   msg: string
   param: keyof User
 }
+
+export type SubmitLabel = 'Login' | 'Signup'

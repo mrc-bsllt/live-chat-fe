@@ -6,19 +6,37 @@
         <button type="submit" class="btn btn-success">{{ props.buttonLabel }}</button>
       </div>
     </form>
+
+    <div class="mt-5 text-center">
+      <span>{{ bottomMessage }} <nuxt-link :to="`/auth/${bottomLink.toLowerCase()}`" class="text-18 text-blue underline">{{ bottomLink }}</nuxt-link></span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { API_HOST } from '@/utils/config'
 import type { User } from '@/types/user'
-import type { Error } from '@/types/form'
+import type { SubmitLabel, Error } from '@/types/form'
 
 const props = defineProps({
   formData: { type: Object as () => User, required: true },
-  buttonLabel: { type: String, required: true }
+  buttonLabel: { type: String as () => SubmitLabel, required: true }
 })
 
+const bottomMessage = computed((): string => {
+  if(props.buttonLabel === 'Login') {
+    return 'Don\'t have an account?'
+  } else {
+    return 'Already have an account?'
+  }
+})
+const bottomLink = computed((): SubmitLabel => {
+  if(props.buttonLabel === 'Login') {
+    return 'Signup'
+  } else {
+    return 'Login'
+  }
+})
 function submitForm() {
   if('password' in props.formData && 'confirm_password' in props.formData) {
     signup()
