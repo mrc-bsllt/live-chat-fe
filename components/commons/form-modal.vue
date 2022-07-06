@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs" class="w-90 md:w-60 xl:w-50 min-h-[300px] p-10 bg-white rounded-[20px] shadow-2xl">
+  <div v-bind="$attrs" class="w-90 md:w-60 xl:w-50 min-h-[300px] p-10 bg-black rounded-[20px] shadow-2xl">
     <form @submit.prevent="submitForm" novalidate>
       <slot />
       <div class="button__wrapper text-center mt-10">
@@ -8,7 +8,7 @@
     </form>
 
     <div class="mt-5 text-center">
-      <span>{{ bottomMessage }} <nuxt-link :to="`/auth/${bottomLink.toLowerCase()}`" class="text-18 text-blue underline">{{ bottomLink }}</nuxt-link></span>
+      <span>{{ bottomMessage }} <nuxt-link :to="`/auth/${bottomLink.toLowerCase()}`" class="text-18 text-gold underline">{{ bottomLink }}</nuxt-link></span>
     </div>
   </div>
 </template>

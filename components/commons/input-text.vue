@@ -4,7 +4,7 @@
     <input 
       :type="props.inputType" 
       :id="props.field" 
-      class="w-full border-2 border-solid rounded-[3px]"
+      class="w-full border-2 border-solid rounded-[3px] bg-total_black/[.3] outline-gold"
       :class="!showError ? 'border-grey' : 'border-error'"
       @input="($event) => $emit('getValue', $event, props.field)"
     >

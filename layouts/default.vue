@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen overflow-hidden bg-light_green">
+  <div class="w-full h-screen overflow-hidden bg-chat_bg bg-repeat bg-contain">
     <the-header ref="header" />
     <the-aside ref="aside" :style="{ top, height }" />
     <main ref="main" :style="{ marginLeft }" class="p-5">

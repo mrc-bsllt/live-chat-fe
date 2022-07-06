@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full p-5 bg-white">
+  <header class="w-full p-5 bg-black">
     <button @click="logout" @keyup.enter="logout">Logout</button>
   </header>
 </template>

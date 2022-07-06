@@ -32,6 +32,9 @@ module.exports = {
         90: '90%',
         95: '95%'
       },
+      backgroundImage: {
+        chat_bg: "url('@/assets/images/chat-bg.webp')"
+      }
     },
     screens: {
       xs: '320px',
@@ -87,6 +90,7 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      total_black: '#000000',
       black: '#303030',
       white: '#FFFFFF',
       grey: '#BEBEBE',

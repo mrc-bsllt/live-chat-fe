@@ -2,14 +2,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  @apply text-black;
+  @apply text-grey;
 }
 
 .btn {
   @apply text-white uppercase text-22 py-3 px-6 rounded-[5px] shadow-xl hover:bg-opacity-70 transition-all;
 
   &-success {
-    @apply bg-blue;
+    @apply bg-green;
   }
   &-error {
     @apply bg-error;
