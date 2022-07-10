@@ -11,6 +11,29 @@
 <script setup lang="ts">
 import TheHeader from '@/components/the-header.vue'
 import TheAside from '@/components/the-aside.vue'
+import { API_HOST } from '@/utils/config'
+import { logout } from '@/composables/logout'
+import type { User } from '@/types/user'
+import { useUser } from '@/store/user'
+
+const { data: user } = await useAsyncData<User | never>('user', () => {
+  const token = useCookie('token').value
+  const user_id = useCookie('user_id').value
+  
+  return $fetch(API_HOST + '/api/user/' + user_id, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    },
+    async onResponse({ response }) {
+      const { set_user } = useUser()
+      if(response.status === 200) {
+        const { username, image_path, email, friends, requests_sent, notifications } = response._data
+        set_user({ username, image_path, email, friends, requests_sent, notifications })
+      }
+    }
+  })
+})
+if(!user.value) logout()
 
 defineNuxtComponent({
   TheHeader,
