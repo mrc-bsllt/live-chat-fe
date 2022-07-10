@@ -2,7 +2,7 @@
   <div class="w-full h-screen overflow-hidden bg-chat_bg bg-repeat bg-contain">
     <the-header ref="header" />
     <the-aside ref="aside" :style="{ top, height }" />
-    <main ref="main" :style="{ marginLeft }" class="p-5">
+    <main ref="main" :style="{ marginLeft }" class="h-full p-5">
       <slot />
     </main>
   </div>
