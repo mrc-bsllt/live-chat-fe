@@ -65,7 +65,11 @@ async function onSubmit() {
     method: 'POST',
     body: formData,
     async onResponse({ response }) {
-      toggle_refresh_user()
+      if(response.status === 201) {
+        toggle_refresh_user()
+      } else {
+        alert('MOSTRA IL BANNER DI ERRORE')
+      }
 
       setTimeout(() => {
         temporary_image.value = undefined
