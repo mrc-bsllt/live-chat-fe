@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia'
-import type { User } from '@/types/user'
+import type { User, UserState } from '@/types/user'
 
 export const useUser = defineStore('user', {
-  state: (): User => ({
+  state: (): UserState => ({
     username: '',
     image_path: '',
     email: '',
     friends: [],
     requests_sent: [],
-    notifications: []
+    notifications: [],
+    upload_image: false
   }),
   actions: {
     set_user(user: User) {
@@ -19,6 +20,9 @@ export const useUser = defineStore('user', {
       this.friends = friends
       this.requests_sent = requests_sent
       this.notifications = notifications
+    },
+    set_upload_image(value: boolean) {
+      this.upload_image = value
     }
   },
   getters: {
@@ -31,6 +35,9 @@ export const useUser = defineStore('user', {
         requests_sent: this.requests_sent,
         notifications: this.notifications
       }
+    },
+    get_upload_image(): boolean {
+      return this.upload_image
     }
   }
 })

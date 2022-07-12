@@ -8,6 +8,8 @@
             class="absolute top-0 left-0 w-full h-full object-cover object-center"
             alt="user-image" width="200" height="200">
         <input type="file" id="user_image" class="hidden" @change="updateFile">
+
+        <loader v-if="get_upload_image" />
       </label>
 
       <button 
@@ -18,7 +20,7 @@
         <icon name="disk" class="w-[20px] h-[20px]" />
       </button>
     </form>
-
+    
     <nuxt-link to="/">Indietro</nuxt-link>
   </section>
 </template>
@@ -27,14 +29,16 @@
 import { API_HOST } from '@/utils/config'
 import Icon from '@/components/commons/icon.vue'
 import { useUser } from '@/store/user'
+import Loader from '@/components/commons/loader.vue'
 
 defineNuxtComponent({
-  Icon
+  Icon,
+  Loader
 })
 
-// Update user image localy
-const { get_user } = toRefs(useUser())
+const { get_user, get_upload_image } = toRefs(useUser())
 
+// Update user image localy
 const { image_path } = get_user.value
 const temporary_image = ref<string | undefined>(undefined)
 const file = ref<File | undefined>(undefined)

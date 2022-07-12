@@ -99,6 +99,9 @@ module.exports = {
       light_green: '#ADF6B1',
       blue: '#274C77',
       error: '#aa1717'
+    },
+    scale: {
+      30: '0.3'
     }
   },
   variants: {

@@ -23,3 +23,7 @@ export interface User {
   notifications?: Notification[],
   chats?: Chat[]
 }
+
+export interface UserState extends User {
+  upload_image: boolean
+}

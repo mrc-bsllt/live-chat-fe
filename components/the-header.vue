@@ -1,6 +1,6 @@
 <template>
   <header class="flex flex-row justify-between items-center flex-nowrap w-full p-5 bg-black">
-    <thumbnail-avatar :image_path="user_image" :show_username="false" :href="`/${get_user.username}/account`" />
+    <thumbnail-avatar :image_path="user_image" :show_username="false" :href="`/${get_user.username}/account`" :logged_user="true" />
     <button @click="logout" @keyup.enter="logout">Logout</button>
   </header>
 </template>
