@@ -10,6 +10,7 @@ import { API_HOST } from '@/utils/config'
 import { useUser } from '@/store/user'
 import ThumbnailAvatar from '@/components/commons/thumbnail-avatar.vue'
 import { logout } from '@/composables/logout'
+import openSocket from 'socket.io-client'
 
 defineNuxtComponent({
   ThumbnailAvatar
@@ -24,5 +25,9 @@ const user_image = computed(() => {
   } else {
     return '../assets/images/avatar.webp'
   }
+})
+
+onMounted(() => {
+  const socket = openSocket('http://localhost:8080')
 })
 </script>
