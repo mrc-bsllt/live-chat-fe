@@ -3,8 +3,8 @@
     <form @submit.prevent="onSubmit" class="relative" novalidate>
       <label for="user_image" class="relative flex flex-row justify-center items-center flex-nowrap w-[200px] h-[200px] bg-grey rounded-[10px] overflow-hidden cursor-pointer">
         <icon name="camera" class="icon" />
-        <img v-if="image_path || temporary_image" 
-            :src="temporary_image || API_HOST + image_path" 
+        <img v-if="temporary_image || get_user.image_path" 
+            :src="temporary_image || API_HOST + get_user.image_path" 
             class="absolute top-0 left-0 w-full h-full object-cover object-center"
             alt="user-image" width="200" height="200">
         <input type="file" id="user_image" class="hidden" @change="updateFile">
@@ -36,10 +36,10 @@ defineNuxtComponent({
   Loader
 })
 
+const { toggle_upload_image, toggle_refresh_user } = useUser()
 const { get_user, get_upload_image } = toRefs(useUser())
 
 // Update user image localy
-const { image_path } = get_user.value
 const temporary_image = ref<string | undefined>(undefined)
 const file = ref<File | undefined>(undefined)
 function updateFile($event: Event) {
@@ -50,9 +50,11 @@ function updateFile($event: Event) {
   }
 }
 
+// submit form
 async function onSubmit() {
-  const token = useCookie('token').value
+  toggle_upload_image()
 
+  const token = useCookie('token').value
   const formData = new FormData()
   formData.append('image_path', file?.value as File)
 
@@ -63,7 +65,12 @@ async function onSubmit() {
     method: 'POST',
     body: formData,
     async onResponse({ response }) {
-      console.log(response._data)
+      toggle_refresh_user()
+
+      setTimeout(() => {
+        temporary_image.value = undefined
+        toggle_upload_image()
+      }, 1000)
     }
   })
 }

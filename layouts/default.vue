@@ -15,8 +15,12 @@ import { API_HOST } from '@/utils/config'
 import { logout } from '@/composables/logout'
 import type { User } from '@/types/user'
 import { useUser } from '@/store/user'
+defineNuxtComponent({
+  TheHeader,
+  TheAside
+})
 
-const { data: user } = await useAsyncData<User | never>('user', () => {
+const { data: user, refresh } = await useAsyncData<User | void>('user', () => {
   const token = useCookie('token').value
   const user_id = useCookie('user_id').value
   
@@ -35,9 +39,14 @@ const { data: user } = await useAsyncData<User | never>('user', () => {
 })
 if(!user.value) logout()
 
-defineNuxtComponent({
-  TheHeader,
-  TheAside
+// Refresh user when the image is changed
+const { toggle_refresh_user } = useUser()
+const { get_refresh_user } = toRefs(useUser())
+watch(get_refresh_user, async (newValue: boolean) => {
+  if(newValue) {
+    await refresh()
+    toggle_refresh_user()
+  }
 })
 
 // set Aside top/height value AND main margin-left

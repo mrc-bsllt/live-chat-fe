@@ -25,5 +25,6 @@ export interface User {
 }
 
 export interface UserState extends User {
+  refresh_user: boolean
   upload_image: boolean
 }

@@ -9,6 +9,7 @@ export const useUser = defineStore('user', {
     friends: [],
     requests_sent: [],
     notifications: [],
+    refresh_user: false,
     upload_image: false
   }),
   actions: {
@@ -21,8 +22,11 @@ export const useUser = defineStore('user', {
       this.requests_sent = requests_sent
       this.notifications = notifications
     },
-    set_upload_image(value: boolean) {
-      this.upload_image = value
+    toggle_refresh_user() {
+      this.refresh_user = !this.refresh_user
+    },
+    toggle_upload_image() {
+      this.upload_image = !this.upload_image
     }
   },
   getters: {
@@ -38,6 +42,9 @@ export const useUser = defineStore('user', {
     },
     get_upload_image(): boolean {
       return this.upload_image
+    },
+    get_refresh_user(): boolean {
+      return this.refresh_user
     }
   }
 })
