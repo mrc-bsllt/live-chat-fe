@@ -19,3 +19,12 @@
 .icon {
   @apply w-[50px] h-[50px];
 }
+
+// vue transition
+.slide-left-enter-active, .slide-left-leave-active {
+  transition: all 0.5s;
+  transform: translateX(0);
+}
+.slide-left-enter-from, .slide-left-leave-to {
+  transform: translateX(100%);
+}

@@ -29,6 +29,7 @@
 import { API_HOST } from '@/utils/config'
 import Icon from '@/components/commons/icon.vue'
 import { useUser } from '@/store/user'
+import { useIndex } from '@/store/index'
 import Loader from '@/components/commons/loader.vue'
 
 defineNuxtComponent({
@@ -39,16 +40,28 @@ defineNuxtComponent({
 const { toggle_upload_image, toggle_refresh_user } = useUser()
 const { get_user, get_upload_image } = toRefs(useUser())
 
+const { toggle_show_banner, set_message } = useIndex()
+
 // Update user image localy
 const temporary_image = ref<string | undefined>(undefined)
 const file = ref<File | undefined>(undefined)
+const accepted_mimetype = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
+
 function updateFile($event: Event) {
   const files = ($event.target as HTMLInputElement).files
   if(files?.length) {
+    const { type } = files[0]
+    if(!accepted_mimetype.includes(type)) {
+      set_message('Invalid format!')
+      toggle_show_banner()
+      return
+    }
+
     file.value = files[0]
     temporary_image.value = URL.createObjectURL(file.value)
   }
 }
+// -------------------------------------------------------------------------
 
 // submit form
 async function onSubmit() {
@@ -68,7 +81,8 @@ async function onSubmit() {
       if(response.status === 201) {
         toggle_refresh_user()
       } else {
-        alert('MOSTRA IL BANNER DI ERRORE')
+        set_message(response._data.msg)
+        toggle_show_banner()
       }
 
       setTimeout(() => {
@@ -78,4 +92,5 @@ async function onSubmit() {
     }
   })
 }
+// -------------------------------------------------------------------------
 </script>

@@ -5,19 +5,28 @@
     <main ref="main" :style="{ marginLeft }" class="h-full p-5">
       <slot />
     </main>
+
+    <transition name="slide-left" mode="out-in">
+      <notification-banner v-if="get_show_banner" :style="{ top }">
+        <p class="text-black">{{ get_message }}</p>
+      </notification-banner>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import TheHeader from '@/components/the-header.vue'
 import TheAside from '@/components/the-aside.vue'
+import NotificationBanner from '@/components/commons/notification_banner.vue'
 import { API_HOST } from '@/utils/config'
 import { logout } from '@/composables/logout'
 import type { User } from '@/types/user'
 import { useUser } from '@/store/user'
+import { useIndex } from '@/store/index'
 defineNuxtComponent({
   TheHeader,
-  TheAside
+  TheAside,
+  NotificationBanner
 })
 
 const { data: user, refresh } = await useAsyncData<User | void>('user', () => {
@@ -48,6 +57,20 @@ watch(get_refresh_user, async (newValue: boolean) => {
     toggle_refresh_user()
   }
 })
+// -------------------------------------------------------------------------
+
+// toggle notification banner
+const { get_show_banner, get_message } = toRefs(useIndex())
+const { toggle_show_banner, set_message } = useIndex()
+watch(get_show_banner, (newValue: boolean) => {
+  if(newValue) {
+    setTimeout(() => {
+      toggle_show_banner()
+      set_message('')
+    }, 4000)
+  }
+})
+// -------------------------------------------------------------------------
 
 // set Aside top/height value AND main margin-left
 const header = ref<typeof TheHeader | null>(null)
