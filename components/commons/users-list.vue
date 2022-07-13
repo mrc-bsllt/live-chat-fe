@@ -21,10 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { API_HOST } from '@/utils/config'
 import { useUser } from '@/store/user'
 import ThumbnailAvatar from '@/components/commons/thumbnail-avatar.vue'
 import { User } from '@/types/user'
+import { sendRequest, accept_request, remove_friend, reject_request } from '@/composables/friendship'
 
 defineNuxtComponent({
   ThumbnailAvatar
@@ -57,8 +57,7 @@ function setLabel(friend_id: string): string {
 }
 // -------------------------------------------------------------------------
 
-// Submit requests
-const { toggle_refresh_user } = useUser()
+// Submit requests (functions are imprted from ./composables/friendship.ts)
 function onSubmit(friend_id: string, action: string) {
   if(action === 'Aggiungi') {
     sendRequest(friend_id)
@@ -67,74 +66,6 @@ function onSubmit(friend_id: string, action: string) {
   } else if(action === 'Accetta') {
     accept_request(friend_id)
   }
-}
-
-async function sendRequest(friend_id: string) {
-  const token = useCookie('token').value
-  
-  await $fetch(`${API_HOST}/api/send-request`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    },
-    method: 'POST',
-    body: { friend_id },
-    async onResponse({ response }) {
-      if(response.status === 201) {
-        toggle_refresh_user()
-      }
-    }
-  })
-}
-
-async function accept_request(friend_id: string) {
-  const token = useCookie('token').value
-  
-  await $fetch(`${API_HOST}/api/accept-friendship`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    },
-    method: 'PUT',
-    body: { friend_id },
-    async onResponse({ response }) {
-      if(response.status === 201) {
-        toggle_refresh_user()
-      }
-    }
-  })
-}
-
-async function remove_friend(friend_id: string) {
-  const token = useCookie('token').value
-  
-  await $fetch(`${API_HOST}/api/remove-friendship`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    },
-    method: 'PUT',
-    body: { friend_id },
-    async onResponse({ response }) {
-      if(response.status === 201) {
-        toggle_refresh_user()
-      }
-    }
-  })
-} 
-
-async function reject_request(friend_id: string) {
-  const token = useCookie('token').value
-  
-  await $fetch(`${API_HOST}/api/reject-request`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    },
-    method: 'PUT',
-    body: { friend_id },
-    async onResponse({ response }) {
-      if(response.status === 201) {
-        toggle_refresh_user()
-      }
-    }
-  })
 }
 // -------------------------------------------------------------------------
 </script>
