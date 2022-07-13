@@ -7,6 +7,9 @@
 
 .btn {
   @apply text-white uppercase text-22 py-3 px-6 rounded-[5px] shadow-xl hover:bg-opacity-70 transition-all;
+  &[disabled] {
+    @apply opacity-30;
+  }
 
   &-success {
     @apply bg-green;
