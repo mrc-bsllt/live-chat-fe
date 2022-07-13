@@ -87,11 +87,24 @@ async function sendRequest(friend_id: string) {
 }
 
 async function accept_request(friend_id: string) {
+  const token = useCookie('token').value
   
+  await $fetch(`${API_HOST}/api/accept-friendship`, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    },
+    method: 'PUT',
+    body: { friend_id },
+    async onResponse({ response }) {
+      if(response.status === 201) {
+        toggle_refresh_user()
+      }
+    }
+  })
 }
 
 async function remove_friend(friend_id: string) {
-  
+
 } 
 
 async function reject_request(friend_id: string) {
@@ -104,7 +117,6 @@ async function reject_request(friend_id: string) {
     method: 'PUT',
     body: { friend_id },
     async onResponse({ response }) {
-      console.log(response._data)
       if(response.status === 201) {
         toggle_refresh_user()
       }
