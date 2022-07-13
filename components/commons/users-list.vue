@@ -10,12 +10,12 @@
       <button 
         class="btn ml-10" 
         :class="setLabel(friend._id as string) !== 'Rimuovi' ? 'btn-success' : 'btn-error'"
-        @click="sendRequest(friend._id as string)"
+        @click="onSubmit(friend._id as string, setLabel(friend._id as string))"
         :disabled="setLabel(friend._id as string) === 'In attesa'"
       >
           {{ setLabel(friend._id as string) }}
       </button>
-      <button v-if="setLabel(friend._id as string) === 'Accetta'" class="btn btn-error ml-5">Rifiuta</button>
+      <button v-if="setLabel(friend._id as string) === 'Accetta'" class="btn btn-error ml-5" @click="reject_request(friend._id as string)">Rifiuta</button>
     </li>
   </ul>
 </template>
@@ -61,9 +61,19 @@ function setLabel(friend_id: string): string {
 
 // Submit requests
 const { toggle_refresh_user } = useUser()
+function onSubmit(friend_id: string, action: string) {
+  if(action === 'Aggiungi') {
+    sendRequest(friend_id)
+  } else if(action === 'Rimuovi') {
+    remove_friend(friend_id)
+  } else if(action === 'Accetta') {
+    accept_request(friend_id)
+  }
+}
+
 async function sendRequest(friend_id: string) {
   const token = useCookie('token').value
-
+  
   await $fetch(`${API_HOST}/api/send-request`, {
     headers: {
       Authorization: 'Bearer ' + token
@@ -71,6 +81,32 @@ async function sendRequest(friend_id: string) {
     method: 'POST',
     body: { friend_id },
     async onResponse({ response }) {
+      if(response.status === 201) {
+        toggle_refresh_user()
+      }
+    }
+  })
+}
+
+async function accept_request(friend_id: string) {
+  
+}
+
+async function remove_friend(friend_id: string) {
+  
+} 
+
+async function reject_request(friend_id: string) {
+  const token = useCookie('token').value
+  
+  await $fetch(`${API_HOST}/api/reject-request`, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    },
+    method: 'PUT',
+    body: { friend_id },
+    async onResponse({ response }) {
+      console.log(response._data)
       if(response.status === 201) {
         toggle_refresh_user()
       }
