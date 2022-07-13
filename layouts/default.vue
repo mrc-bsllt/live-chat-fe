@@ -40,8 +40,8 @@ const { data: user, refresh } = await useAsyncData<User | void>('user', () => {
     async onResponse({ response }) {
       const { set_user } = useUser()
       if(response.status === 200) {
-        const { username, image_path, email, friends, requests_sent, notifications } = response._data
-        set_user({ username, image_path, email, friends, requests_sent, notifications })
+        const { username, image_path, email, friends, requests_sent, requests_received, notifications } = response._data
+        set_user({ username, image_path, email, friends, requests_sent, requests_received, notifications })
       }
     }
   })

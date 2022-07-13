@@ -8,18 +8,20 @@ export const useUser = defineStore('user', {
     email: '',
     friends: [],
     requests_sent: [],
+    requests_received: [],
     notifications: [],
     refresh_user: false,
     upload_image: false
   }),
   actions: {
     set_user(user: User) {
-      const { username, image_path, email, friends, requests_sent, notifications } = user
+      const { username, image_path, email, friends, requests_sent, requests_received, notifications } = user
       this.username = username
       this.image_path = image_path
       this.email = email
       this.friends = friends
       this.requests_sent = requests_sent
+      this.requests_received = requests_received
       this.notifications = notifications
     },
     toggle_refresh_user() {
@@ -37,6 +39,7 @@ export const useUser = defineStore('user', {
         email: this.email,
         friends: this.friends,
         requests_sent: this.requests_sent,
+        requests_received: this.requests_received,
         notifications: this.notifications
       }
     },

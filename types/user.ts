@@ -22,6 +22,7 @@ export interface User {
   confirm_password?: string,
   friends?: User[],
   requests_sent?: User[],
+  requests_received?: User[],
   notifications?: Notification[],
   chats?: Chat[]
 }

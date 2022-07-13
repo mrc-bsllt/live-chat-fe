@@ -42,16 +42,14 @@ const { get_user } = toRefs(useUser())
 
 function setLabel(friend_id: string): string {
   const friend_index = get_user.value.friends?.findIndex(friend => friend._id === friend_id)!
-  const request_index = get_user.value.requests_sent?.findIndex(friend => friend._id === friend_id)!
-  const notification_index = get_user.value.notifications?.findIndex(notification => {
-    return notification.friend._id === friend_id && notification.text === 'Ti ha inviato una richiesta di amicizia.'
-  })!
+  const sent_index = get_user.value.requests_sent?.findIndex(friend => friend._id === friend_id)!
+  const received_index = get_user.value.requests_received?.findIndex(friend => friend._id === friend_id)!
   
-  if(friend_index < 0 && request_index < 0 && notification_index < 0) {
+  if(friend_index < 0 && sent_index < 0 && received_index < 0) {
     return 'Aggiungi'
   } else if(friend_index >= 0) {
     return 'Rimuovi'
-  } else if(request_index >= 0) {
+  } else if(sent_index >= 0) {
     return 'In attesa'
   } else {
     return 'Accetta'
