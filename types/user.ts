@@ -1,7 +1,7 @@
-type NotificationText = 'Ti ha inviato una richiesta di amicizia.' | 'Ha accettato la tua richiesta di amicizia.'
 interface Notification {
   friend: User
-  text: NotificationText
+  text: string
+  saw: boolean
 }
 interface Message {
   text: string
