@@ -6,6 +6,8 @@
       class="w-full h-full bg-transparent border-b border-solid border-grey outline-none px-6"
       v-model="inputValue"
       @input="searchFriends"
+      @focus="searchFriends"
+      @blur="onBlur"
     >
     <icon name="search" class="w-[20px] h-[20px] absolute top-1/2 left-0 -translate-y-1/2" />
 
@@ -41,6 +43,14 @@ defineNuxtComponent({
 // friends result banner
 const show_results = ref<boolean>(false)
 const no_results = ref<boolean>(false)
+// -------------------------------------------------------------------------
+
+// Blur event
+function onBlur() {
+  setTimeout(() => {
+    show_results.value = false
+  }, 500)
+}
 // -------------------------------------------------------------------------
 
 // fetch users by username
