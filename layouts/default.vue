@@ -91,8 +91,8 @@ function setCSSProperties(header: typeof TheHeader | null, aside: typeof TheHead
 onMounted(() => {
   const socket = openSocket('http://localhost:8080')
   socket.on('requests', data => {
-    if(data.action === 'send') {
-      
+    if(data.friend_id === useCookie('user_id').value) {
+      refresh()
     }
   })
 
