@@ -93,6 +93,8 @@ onMounted(() => {
   socket.on('requests', data => {
     if(data.friend_id === useCookie('user_id').value) {
       refresh()
+      set_message(`${data.user.username} ${data.text_notification}`)
+      toggle_show_banner()
     }
   })
 
