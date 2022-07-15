@@ -15,16 +15,22 @@
       >
           {{ setLabel(friend._id as string) }}
       </button>
-      <button v-if="setLabel(friend._id as string) === 'Accetta'" class="btn btn-error ml-5" @click="reject_request(friend._id as string)">Rifiuta</button>
+      <button 
+        v-if="setLabel(friend._id as string) === 'Accetta'" 
+        class="btn btn-error ml-5" 
+        @click="reject_request(friend._id as string, toggle_refresh_user)"
+      >
+        Rifiuta
+      </button>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
+import { sendRequest, accept_request, remove_friend, reject_request } from '@/composables/friendship'
 import { useUser } from '@/store/user'
 import ThumbnailAvatar from '@/components/commons/thumbnail-avatar.vue'
 import { User } from '@/types/user'
-import { sendRequest, accept_request, remove_friend, reject_request } from '@/composables/friendship'
 
 defineNuxtComponent({
   ThumbnailAvatar
@@ -37,9 +43,10 @@ const props = defineProps({
   }
 })
 
-// Set button label
 const { get_user } = toRefs(useUser())
+const { toggle_refresh_user } = useUser()
 
+// Set button label
 function setLabel(friend_id: string): string {
   const friend_index = get_user.value.friends?.findIndex(friend => friend._id === friend_id)!
   const sent_index = get_user.value.requests_sent?.findIndex(friend => friend._id === friend_id)!
@@ -60,11 +67,11 @@ function setLabel(friend_id: string): string {
 // Submit requests (functions are imprted from ./composables/friendship.ts)
 function onSubmit(friend_id: string, action: string) {
   if(action === 'Aggiungi') {
-    sendRequest(friend_id)
+    sendRequest(friend_id, toggle_refresh_user)
   } else if(action === 'Rimuovi') {
-    remove_friend(friend_id)
+    remove_friend(friend_id, toggle_refresh_user)
   } else if(action === 'Accetta') {
-    accept_request(friend_id)
+    accept_request(friend_id, toggle_refresh_user)
   }
 }
 // -------------------------------------------------------------------------

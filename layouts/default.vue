@@ -23,6 +23,8 @@ import { logout } from '@/composables/logout'
 import type { User } from '@/types/user'
 import { useUser } from '@/store/user'
 import { useIndex } from '@/store/index'
+import openSocket from 'socket.io-client'
+
 defineNuxtComponent({
   TheHeader,
   TheAside,
@@ -87,6 +89,13 @@ function setCSSProperties(header: typeof TheHeader | null, aside: typeof TheHead
   marginLeft.value = asideWidth + 'px'
 }
 onMounted(() => {
+  const socket = openSocket('http://localhost:8080')
+  socket.on('requests', data => {
+    if(data.action === 'send') {
+      
+    }
+  })
+
   setCSSProperties(header.value, aside.value)
   window.addEventListener('resize', () => {
     setCSSProperties(header.value, aside.value)

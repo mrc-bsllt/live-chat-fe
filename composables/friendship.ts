@@ -1,8 +1,6 @@
 import { API_HOST } from '@/utils/config'
-import { useUser } from '@/store/user'
-const { toggle_refresh_user } = useUser()
 
-export const sendRequest = async (friend_id: string) => {
+export const sendRequest = async (friend_id: string, toggle_refresh_user: () => void) => {
   const token = useCookie('token').value
   
   await $fetch(`${API_HOST}/api/send-request`, {
@@ -19,7 +17,7 @@ export const sendRequest = async (friend_id: string) => {
   })
 }
 
-export const accept_request = async (friend_id: string) => {
+export const accept_request = async (friend_id: string, toggle_refresh_user: () => void) => {
   const token = useCookie('token').value
   
   await $fetch(`${API_HOST}/api/accept-friendship`, {
@@ -36,7 +34,7 @@ export const accept_request = async (friend_id: string) => {
   })
 }
 
-export const remove_friend = async (friend_id: string) => {
+export const remove_friend = async (friend_id: string, toggle_refresh_user: () => void) => {
   const token = useCookie('token').value
   
   await $fetch(`${API_HOST}/api/remove-friendship`, {
@@ -53,7 +51,7 @@ export const remove_friend = async (friend_id: string) => {
   })
 } 
 
-export const reject_request = async (friend_id: string) => {
+export const reject_request = async (friend_id: string, toggle_refresh_user: () => void) => {
   const token = useCookie('token').value
   
   await $fetch(`${API_HOST}/api/reject-request`, {

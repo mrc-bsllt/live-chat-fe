@@ -11,7 +11,6 @@ import { useUser } from '@/store/user'
 import ThumbnailAvatar from '@/components/commons/thumbnail-avatar.vue'
 import SearchBar from '@/components/search-bar.vue'
 import { logout } from '@/composables/logout'
-import openSocket from 'socket.io-client'
 
 defineNuxtComponent({
   ThumbnailAvatar,
@@ -19,8 +18,4 @@ defineNuxtComponent({
 })
 
 const { get_user } = toRefs(useUser())
-
-onMounted(() => {
-  const socket = openSocket('http://localhost:8080')
-})
 </script>
